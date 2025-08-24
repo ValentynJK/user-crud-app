@@ -1,75 +1,100 @@
-# Pet CRUD Application
+# User CRUD Application
 
-This is a simple CRUD application for managing pets using Express.js, Prisma ORM, and PostgreSQL. The application allows users to create, read, update, and delete pet records.
+A simple CRUD application for managing users (and pets) using Express.js, TypeScript, Prisma ORM, and PostgreSQL. The app supports creating, reading, updating, and deleting user records, and is ready for modern TypeScript development.
 
 ## Project Structure
 
 ```
-pet-crud-app
+user-crud-app
 ├── src
 │   ├── app.ts                # Entry point of the application
-│   ├── controllers           # Contains controllers for handling requests
-│   │   └── petController.ts  # Controller for pet-related operations
-│   ├── routes                # Defines application routes
-│   │   └── petRoutes.ts      # Routes for pet CRUD operations
-│   ├── services              # Contains business logic
-│   │   └── petService.ts     # Service for interacting with the database
-│   ├── prisma                # Prisma schema and database configuration
-│   │   └── schema.prisma     # Defines the data model for pets
-│   └── utils                 # Utility functions
-│       └── db.ts            # Database connection utility
-├── terraform                  # Infrastructure as code using Terraform
-│   ├── main.tf               # Main Terraform configuration
-│   ├── variables.tf          # Input variables for Terraform
-│   ├── outputs.tf            # Outputs of the Terraform configuration
-│   └── provider.tf           # Provider configuration for Terraform
-├── package.json              # NPM configuration and dependencies
-├── tsconfig.json             # TypeScript configuration
-├── .env                      # Environment variables
-└── README.md                 # Project documentation
+│   ├── config/
+│   │   └── database.ts       # Database config for environments
+│   ├── controllers/
+│   │   └── userController.ts # Controller for user operations
+│   ├── routes/
+│   │   └── userRoutes.ts     # User CRUD routes
+│   ├── services/
+│   │   └── userService.ts    # User business logic and DB access
+│   └── utils/
+│       └── prisma.ts         # Prisma client instance
+├── prisma/
+│   ├── schema.prisma         # Prisma schema (data model)
+│   ├── migrations/           # Prisma migration files
+│   └── scripts/              # DB utility scripts (create/drop)
+├── terraform/
+│   ├── main.tf
+│   ├── variables.tf
+│   ├── outputs.tf
+│   └── provider.tf
+├── package.json
+├── tsconfig.json
+├── .env
+└── README.md
 ```
 
 ## Setup Instructions
 
 1. **Clone the repository:**
-   ```
+
+   ```sh
    git clone <repository-url>
-   cd pet-crud-app
+   cd user-crud-app
    ```
 
 2. **Install dependencies:**
-   ```
+
+   ```sh
    npm install
    ```
 
-3. **Set up the database:**
-   - Configure your PostgreSQL database details in the `.env` file.
-   - Use Terraform to provision the database:
-     ```
-     cd terraform
-     terraform init
-     terraform apply
-     ```
+3. **Configure your environment:**
+   - Edit `.env` with your PostgreSQL credentials and database name.
 
-4. **Run the application:**
+4. **Create the database:**
+
+   ```sh
+   npm run db:create
    ```
-   npm start
+
+5. **Run Prisma migrations:**
+
+   ```sh
+   npx prisma migrate dev --name init --schema=./prisma/schema.prisma
+   ```
+
+6. **(Optional) Open Prisma Studio:**
+
+   ```sh
+   npm run studio
+   ```
+
+7. **Start the development server (auto-reloads on changes):**
+   ```sh
+   npm run dev
    ```
 
 ## Usage
 
-- **Create a Pet:** Send a POST request to `/pets` with pet details.
-- **Get a Pet:** Send a GET request to `/pets/:id` to retrieve a pet by ID.
-- **Update a Pet:** Send a PUT request to `/pets/:id` with updated pet details.
-- **Delete a Pet:** Send a DELETE request to `/pets/:id` to remove a pet.
+- **Create a User:** `POST /users` with user details in the body.
+- **Get a User:** `GET /users/:id`
+- **Update a User:** `PUT /users/:id` with updated user details.
+- **Delete a User:** `DELETE /users/:id`
 
 ## Technologies Used
 
-- **Express.js**: Web framework for Node.js
-- **Prisma ORM**: Database toolkit for TypeScript and Node.js
-- **PostgreSQL**: Relational database management system
-- **Terraform**: Infrastructure as code tool for provisioning cloud resources
+- **TypeScript**: Type-safe JavaScript
+- **Express.js**: Web framework
+- **Prisma ORM**: TypeScript ORM for PostgreSQL
+- **PostgreSQL**: Database
+- **Terraform**: Infrastructure as code
+
+## Development
+
+- Uses `nodemon` and `ts-node` for hot-reloading in development.
+- Linting and formatting with ESLint and Prettier.
+- All Prisma commands use the schema at `prisma/schema.prisma`.
 
 ## License
 
-This project is licensed under the MIT License.
+MIT License
