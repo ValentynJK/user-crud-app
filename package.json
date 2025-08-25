@@ -8,7 +8,9 @@
     "build": "tsc",
     "start": "node dist/app.js",
     "db:create": "ts-node src/prisma/scripts/createDatabase.ts",
-    "studio": "npx prisma studio"
+    "studio": "npx prisma studio",
+    "migrate:create": "npx prisma migrate dev --create-only",
+    "migrate:apply": "npx prisma migrate dev"
   },
   "dependencies": {
     "@prisma/client": "^3.0.0",
